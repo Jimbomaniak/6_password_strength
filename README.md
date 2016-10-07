@@ -13,6 +13,7 @@ Run script and enter your password.
 ### Description:
 Script has 1 function:
 
-get_password_strength(password) - take password(*string*), return mark from 1 to 10
+get_black_list_passwords() - load black list of passwords from https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/10_million_password_list_top_1000.txt
 
-function get list of password blacklist from: https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/10_million_password_list_top_1000.txt
+get_password_strength(password ,black_list_passwords=None) - take password(*string*) and black list of passwords, return mark from 1 to 10
+
