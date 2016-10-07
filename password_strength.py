@@ -1,8 +1,36 @@
+import re
+import requests
 
 
 def get_password_strength(password):
-    pass
-
+    URL = 'https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/10_million_password_list_top_1000.txt'
+    pass_base_get = requests.get(URL)
+    pass_base_list = pass_base_get.text.split('\n')
+    hardness = 0
+    WORST_LEN, BAD_LEN, GOOD_LEN, BEST_LEN = (3, 6, 8, 10)
+    if password not in pass_base_list:
+        hardness += 1
+    if len(password) > WORST_LEN:
+        hardness += 1
+    if len(password) > BAD_LEN:
+        hardness += 1
+    if len(password) > GOOD_LEN:
+        hardness += 1
+    if len(password) > BEST_LEN:
+        hardness += 1
+    if re.search(r'\d+', password):  #have digits
+        hardness += 1
+    if re.search(r'[a-z]', password):  #have small letters
+        hardness += 1
+    if re.search(r'[A-Z]', password):  #have big letters
+        hardness += 1
+    if re.search(r'\s', password):  #have whitespaces
+        hardness += 1
+    if re.search(r'[^A-Za-z\s\w]', password):  #have other symbols
+        hardness +=1
+    return hardness
 
 if __name__ == '__main__':
-    pass
+    password = input('enter your password: ')
+    get_hardness = get_password_strength(password)
+    print('Hardness of your password is {0}'.format(get_hardness))
