@@ -18,15 +18,15 @@ def get_password_strength(password):
         hardness += 1
     if len(password) > BEST_LEN:
         hardness += 1
-    if re.search(r'\d+', password):  #have digits
+    if re.search(r'\d+', password):  #has digits
         hardness += 1
-    if re.search(r'[a-z]', password):  #have small letters
+    if re.search(r'[a-z]', password):  #has small letters
         hardness += 1
-    if re.search(r'[A-Z]', password):  #have big letters
+    if re.search(r'[A-Z]', password):  #has big letters
         hardness += 1
-    if re.search(r'\s', password):  #have whitespaces
+    if re.search(r'\s', password):  #has whitespaces
         hardness += 1
-    if re.search(r'[^A-Za-z\s\w]', password):  #have other symbols
+    if re.search(r'[^A-Za-z\s\w]', password):  #has other symbols
         hardness +=1
     return hardness
 
