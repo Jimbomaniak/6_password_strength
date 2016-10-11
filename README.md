@@ -1,19 +1,19 @@
-## 6_password_strength
+# 6_password_strength
 
-### Prerequisites:
+###Prerequisites:
+Script needs internet connection.
 
-Run in console pip install -r requirements.txt to install 3rd party modules.
+---
 
-#### This script give mark to your password from 1 (*easy password*) to 10 (*heaviest password*)
+Script checks complexity of your password by several parameters:
+* length
+* inclusion of upper case letters
+* inclusion of digits
+* inclusion of special characters
+* no blacklisted
 
-### How to use:
-
-Run script and enter your password.
-
-### Description:
-Script has 2 functions:
-
-- get_black_list_passwords() - load black list of passwords from https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/10_million_password_list_top_1000.txt
-
-- get_password_strength(password ,black_list_passwords=None) - take password(*string*) and black list of passwords, return mark from 1 to 10
-
+### How to use
+Simply run script using `python password_strength.py`, wait until it load blacklist and then enter your password.
+The result will be a number of point that expresses your password complexity:
+* 1 - worst password ever
+* 10 - impossible to hack
