@@ -1,25 +1,22 @@
 import re
 import requests
+import getpass
+import os
 
 
-def load_blacklist_file():
-    try:
-        with open('blacklist.txt', mode='r') as txt_file:
-            black_list = txt_file.read().split('\n')
-        return black_list
-    except FileNotFoundError:
-        black_list = get_black_list_passwords()
-        return black_list
+def load_blacklist_passwords():
+    with open('blacklist.txt', mode='r') as txt_file:
+        black_list = txt_file.read().split('\n')
+    return black_list
 
 
-def get_black_list_passwords():
-    URL = 'https://raw.githubusercontent.com/danielmiessler/ \
+def load_blacklist_passwords_from_site():
+    url = 'https://raw.githubusercontent.com/danielmiessler/ \
     SecLists/master/Passwords/10_million_password_list_top_1000.txt'
-    black_list_get = requests.get(URL)
+    black_list_get = requests.get(url)
     black_list_passwords = black_list_get.text.split('\n')
-    black_list = open('blacklist.txt', 'w')
-    black_list.write(black_list_get.text)
-    black_list.close()
+    with open('blacklist.txt', 'w') as black_list:
+        black_list.write(black_list_get.text)
     return black_list_passwords
 
 
@@ -55,7 +52,10 @@ def get_password_strength(password, black_list_passwords=None):
     return strength
 
 if __name__ == '__main__':
-    password = input('enter your password: ')
-    black_list_passwords = load_blacklist_file()
-    password_strength = get_password_strength(password, black_list_passwords)
+    password = getpass.unix_getpass()
+    if os.path.exists('blacklist.txt'):
+        black_list = load_blacklist_passwords()
+    else:
+        black_list = load_blacklist_passwords_from_site()
+    password_strength = get_password_strength(password, black_list)
     print('Hardness of your password is {0}'.format(password_strength))
